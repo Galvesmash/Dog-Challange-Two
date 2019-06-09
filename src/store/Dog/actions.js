@@ -9,19 +9,19 @@ export default {
           resolve(_response.data.message)
         })
         .catch(_error => {
-          reject(_error.message)
+          reject(_error.response.data.message)
         })
     })
   },
-  POST_EXAMPLE({ commit }, _payload) {
+  SEARCH_DOG({ commit }, _payload) {
     return new Promise((resolve, reject) => {
-      axios.post('url', _payload)
+      axios.get(`https://dog.ceo/api/breed/${_payload.search}/images/random`)
         .then(_response => {
           resolve(_response.data.message)
         })
         .catch(_error => {
-          reject(_error.message)
+          reject(_error.response.data.message)
         })
     })
-  }
+  },
 }
