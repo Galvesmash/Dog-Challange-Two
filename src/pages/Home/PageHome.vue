@@ -1,13 +1,27 @@
 <template>
   <div class="page-home">
-    <sui-image size="medium" circular centered
-      class="image"
-      :class="{ 'inverted loader': !dogImage }"
-      :src="dogImage"
-    ></sui-image>
-    <sui-button primary>ok</sui-button>
-    <sui-button secondary>exit</sui-button>
-    <h1 class="title">Vue + Semantic-ui-vue + Less Template</h1>
+    <sui-dropdown
+      :options="fonts"
+      placeholder="Select font"
+      search
+      selection
+      v-model="currentFont"
+    />
+    <sui-dropdown
+      :options="colors"
+      placeholder="Select font"
+      search
+      selection
+      v-model="currentColor"
+    />
+    <div class="ui search" :calss="{ 'loading': isSearching }">
+      <div class="ui icon input">
+        <input class="prompt" type="text" placeholder="Search...">
+        <i class="search icon"></i>
+      </div>
+      <div class="results"></div>
+    </div>
+    <img :src="dogImage" class="ui medium circular centered image">
   </div>
 </template>
 
@@ -16,7 +30,24 @@ export default {
   name: 'PageHome',
   data() {
     return {
-      dogImage: ''
+      dogImage: '',
+      isSearching: false,
+      currentFont: null,
+      fonts: [
+        { key: 'font1', value: '1', text: 'Font 1' },
+        { key: 'font2', value: '2', text: 'Font 2' },
+        { key: 'font3', value: '3', text: 'Font 3' },
+        { key: 'font4', value: '4', text: 'Font 4' },
+        { key: 'font5', value: '5', text: 'Font 5' }
+      ],
+      currentColor: null,
+      colors: [
+        { key: 'color1', value: 'black', text: 'Black' },
+        { key: 'color2', value: 'red', text: 'Red' },
+        { key: 'color3', value: 'green', text: 'Green' },
+        { key: 'color4', value: 'blue', text: 'Blue' },
+        { key: 'color5', value: 'yellow', text: 'Yellow' }
+      ],
     }
   },
   mounted() {
