@@ -13,6 +13,22 @@ export default {
         })
     })
   },
+  GET_ALL_BREEDS({ commit }) {
+    return new Promise((resolve, reject) => {
+      axios.get('https://dog.ceo/api/breeds/list/all')
+        .then(_response => {
+          let allBreeds = []
+          let breedKeys = Object.keys(_response.data.message)
+          for (let i in breedKeys) {
+            allBreeds.push({ key: breedKeys[i], value: breedKeys[i], text: breedKeys[i] })
+          }
+          resolve(allBreeds)
+        })
+        .catch(_error => {
+          reject(_error.response.data.message)
+        })
+    })
+  },
   SEARCH_DOG({ commit }, _payload) {
     return new Promise((resolve, reject) => {
       axios.get(`https://dog.ceo/api/breed/${_payload.search}/images/random`)

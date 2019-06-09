@@ -2,7 +2,7 @@
   <div class="page-home">
     <div class="header" :style="{ backgroundImage: `url(${headerImage})` }">
     </div>
-    <div class="content">
+    <div class="content" :class="{ 'loading': isSearching }">
       <h1>Challange Two</h1>
       <div class="item">
         <sui-dropdown
@@ -17,14 +17,25 @@
       <div class="item">
         <sui-dropdown
           :options="colors"
-          placeholder="Select font"
+          placeholder="Select color"
           search
           selection
           centered
           v-model="currentColor"
         />
       </div>
-      <div class="ui search item" :class="{ 'loading': isSearching }">
+      <div class="item" v-if="breedList">
+        <sui-dropdown
+          :class="{ 'loading': isSearching }"
+          :options="breedList"
+          placeholder="Select breed"
+          search
+          selection
+          centered
+          v-model="search"
+        />
+      </div>
+      <!-- <div class="ui search item" :class="{ 'loading': isSearching }">
         <div class="ui icon input">
           <input class="prompt" type="text"
             v-model="search"
@@ -33,7 +44,7 @@
           <i class="search icon"></i>
         </div>
         <div class="results"></div>
-      </div>
+      </div> -->
       <div class="results" v-if="!searchError && searchedDog">
         <img :src="dogImage" class="ui medium centered image">
         <h1 class="title" :class="[currentFont, currentColor]">{{ searchedDog }}</h1>
@@ -87,6 +98,7 @@
         searchError: null,
         isSearching: false,
         isModalOpen: false,
+        breedList: null,
         fonts: [
           { key: 'fresca', value: 'fresca', text: 'Fresca' },
           { key: 'amatic', value: 'amatic', text: 'Amatic SC' },
@@ -105,6 +117,7 @@
     },
     created() {
       this.getRandomImage()
+      this.getAllBreeds()
       this.debouncedSearch = _.debounce(this.searchDog, 500)
     },
     mounted() {
@@ -120,6 +133,14 @@
           .dispatch('Dog/GET_RANDOM_IMAGE')
           .then(_response => {
             vm.headerImage = _response
+          })
+      },
+      getAllBreeds() {
+        let vm = this
+        vm.$store
+          .dispatch('Dog/GET_ALL_BREEDS')
+          .then(_response => {
+            vm.breedList = _response
           })
       },
       searchDog() {
@@ -158,6 +179,9 @@
 </script>
 
 <style lang="less" scoped>
+  .ui.selection.dropdown {
+    text-transform: capitalize;
+  }
   .page-home {
     .header {
       width: 100vw;
