@@ -147,6 +147,7 @@
         localStorage.setItem('currentColor', this.currentColor)
         localStorage.setItem('searchedDog', this.searchedDog)
         localStorage.setItem('dogImage', this.dogImage)
+        localStorage.setItem('data', new Date())
         this.toggleModal()
       },
       toggleModal() {
