@@ -35,16 +35,6 @@
           v-model="search"
         />
       </div>
-      <!-- <div class="ui search item" :class="{ 'loading': isSearching }">
-        <div class="ui icon input">
-          <input class="prompt" type="text"
-            v-model="search"
-            placeholder="Search..."
-          >
-          <i class="search icon"></i>
-        </div>
-        <div class="results"></div>
-      </div> -->
       <div class="results" v-if="!searchError && searchedDog">
         <img :src="dogImage" class="ui medium centered image">
         <h1 class="title" :class="[currentFont, currentColor]">{{ searchedDog }}</h1>
